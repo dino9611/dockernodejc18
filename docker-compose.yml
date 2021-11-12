@@ -1,0 +1,41 @@
+version: "3.9"
+
+services:
+  mysqlaja1:
+    image: mysql
+    container_name: mysqlaja1
+    ports:
+      - 8083:3306
+    volumes:
+      - mysqldb:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=12345
+  backend1:
+    build: .
+    depends_on:
+      - mysqlaja1
+    container_name: backend1
+    ports:
+      - 46011:5000
+    environment:
+      - HOST=mysqlaja1
+      - USER=root
+      - PASS=12345
+      - DB=cobavolume
+      - SERVER=1
+  backend2:
+    build: .
+    depends_on:
+      - mysqlaja1
+    container_name: backend2
+    ports:
+      - 46012:5000
+    environment:
+      - HOST=mysqlaja1
+      - USER=root
+      - PASS=12345
+      - DB=cobavolume
+      - SERVER=2
+volumes:
+  mysqldb:
+    external: true

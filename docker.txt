@@ -1,0 +1,75 @@
+cheat sheet :
+
+
+ambil image dari docker registry/docker hub : 
+- cari apps yang mau diambil 
+- docker pull <namaapps>:<version> #nggak ada version bisa tapi bakal dapet latest 
+- lebih detail ada commandnya di website hubnya
+
+untuk melihat list docker image : docker image ls
+
+
+- container docker :
+- docker container create === buat container
+- docker container start === jalankan container
+- docker container run === buat container dan start container
+- docker container inspect === untuk melihat detail contianer
+- docker container rm --force <nama container>
+
+contoh command buat docker container sql :
+
+-  docker container create --name <nama_container> -p <POrtExpose>:<Port_internal> --net=<name_network> -e MYSQL_ROOT_PASSWORD=password <image> 
+
+masuk ke terminal container :
+
+- docker exec -it <nama_container> /bin/bash
+
+membangun image
+
+- docker build -t <name image>:<version>  . ; 
+#titik adalah posisi docker file dimana titik artinya dockerfile ada difolder yang sama dengan dimana kita menjalankan command docker
+
+
+network :
+- docker network --help : untuk melihat list command/feature di docker network
+- docker network create <nama-network>
+- contoh script docker newtwork: docker network create node-network
+- docker connect <name-network> <container>
+
+
+compose :
+- docker-compose up -d (untuk membuat dan menjalankan container,network,dan fitur yang ditulis di ymldocker compose)
+- docker-compose down (menghapus container,network,dan fitur yang ditulis di ymldocker compose)
+- docker-compose build (untuk membangun image yang ada didalm script docker-compose.yml
+
+volume :
+- docker volume ls ( untuk lihat list volume  )
+- docker volume create (untuk buat volume)
+- docker volume --help untuk lihat semua perintah
+
+
+
+1. buat container mysqlserver
+2. buat network 
+3. connect network yang dibuat dengan container mysqlserver
+4. buat container backend
+5. connect network dengan container backend
+
+
+contoh buat container sekaligus connect netowrk :
+docker container run -d --name backend -p 49160:5000 --net=<nama-network> -e NAME=coba -e HOST=mysqlserver -e PORT=3306 dino96112/node-app
+
+
+docker container run -d --name sqlaja -p 8082:3306 -v <nama-volume>:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=password mysql
+
+
+
+perintah latihan :
+1. buat network dengan nama koneksi
+2. buat container apiaja dengan image dari backend sudah terkonek dengan network koneksi
+port apiaja untuk external terserah tapi untuk internal 6000
+3. buat volume datadoang
+3. buat container sqldoang image dari mysql udah konek dengan network koneksi dan punya volume datadoang
+
+
+
