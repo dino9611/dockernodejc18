@@ -23,7 +23,7 @@ const mysql = require("mysql2");
 app.get("/", (req, res) => {
   res.status(200).send({
     message:
-      "welcome docker lagi nodejs dari github actions dino tes dari local",
+      "welcome zaky dari github actions dino tes dari local",
   });
 });
 
